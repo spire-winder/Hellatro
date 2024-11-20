@@ -1,0 +1,19 @@
+{
+	"id": "hellatro",
+	"name": "Hellatro",
+	"display_name": "Hellatro",
+	"author": ["spire_winder"],
+	"description": "Inspired by Hellscube, a custom cube for Magic: the Gathering, Hellatro aims to design the effects that localthunk won't!",
+	"prefix": "hel",
+	"main_file": "hellatro.lua",
+	"priority": 1,
+	"badge_colour": "3C383F",
+	"badge_text_colour": "AA4203",
+	"version": "0.0.2",
+	"dependencies": [
+		{
+			"id": "Steamodded",
+			"min_version": "1.0.0~ALPHA-1030e"
+		}
+	]
+}

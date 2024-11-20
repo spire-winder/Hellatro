@@ -1,0 +1,105 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+# add smeared functionality
+[[patches]]
+[patches.regex]
+target = "card.lua"
+pattern = '''next\(find_joker\('Smeared Joker'\)\)'''
+position = "after"
+payload = '''
+    or next(find_joker('hel-smearflowerpot'))
+'''
+match_indent = true
+
+# initiate variables
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "rental_rate = 3,"
+position = "after"
+payload = '''
+    hel_gx_use = 0,
+    hel_trample_value = 0,
+'''
+match_indent = true
+
+# so other mods can add things to hell pool
+[[patches]]
+[patches.pattern]
+target = "main.lua"
+pattern = '''function love.load()'''
+position = "before"
+payload = '''
+Hellatro = {}
+Hellatro.hellpack = {}
+'''
+match_indent = true
+
+# use trample
+[[patches]]
+[patches.regex]
+target = "functions/button_callbacks.lua"
+pattern = '''func \= function\(\)
+            new_round\(\)'''
+position = "after"
+payload = '''
+    if next(find_joker("hel-colossaldreadmaw")) then
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                card_eval_status_text(find_joker("hel-colossaldreadmaw")[1], 'extra', nil, nil, nil, {
+                  message = localize("hel_trample_ex")
+                });
+                return true
+            end
+        }))
+	G.E_MANAGER:add_event(Event({
+	  blocking = true,
+	  trigger = 'ease',
+	  ref_table = G.GAME,
+	  ref_value = 'chips',
+	  ease_to = G.GAME.chips + math.floor( G.GAME.hel_trample_value or 0),
+	  delay = 0.2,
+	  func = (function(t) return math.floor(t) end)
+	}))
+    G.GAME.hel_trample_value = 0
+	G.E_MANAGER:add_event(Event({
+	  func = (function(t) if G.GAME.chips >  G.GAME.blind.chips then 
+		G.E_MANAGER:add_event(
+			Event({
+				trigger = "immediate",
+				func = function()
+					if G.STATE ~= G.STATES.SELECTING_HAND then
+						return false
+					end
+					G.STATE = G.STATES.HAND_PLAYED
+					G.STATE_COMPLETE = true
+					end_round()
+					return true
+				end,
+			}),
+			"other"
+		)
+	   end
+	  return true end)
+	}))
+    else
+        G.GAME.hel_trample_value = 0
+    end
+'''
+match_indent = true
+
+# set trample
+[[patches]]
+[patches.regex]
+target = "game.lua"
+pattern = '''G\.STATE \= G\.STATES\.NEW_ROUND'''
+position = "before"
+payload = '''
+    if next(find_joker("hel-colossaldreadmaw")) then
+        G.GAME.hel_trample_value = G.GAME.chips - G.GAME.blind.chips
+    end
+'''
+match_indent = true
