@@ -8,13 +8,19 @@ return {
                     "how to {C:attention}Grunch{}"
                 },
             },
+            j_hel_yaoi = {
+                name = "Yaoi",
+                text = {
+                    "{X:mult,C:white}X#1#{} Mult if poker hand contains at least",
+                    "{C:attention}#2#{} {C:attention}Jacks{} and/or {C:attention}Kings{}"
+                },
+            },
             j_hel_smearflowerpot = {
                 name = "{C:dark_edition}Smeared Joker and Flower Pot TAG TEAM GX{}",
                 text = {
-                    "{C:heart}Hearts{} and {C:diamond}Diamonds{} count as the same suit,",
-                    "{C:spade}Spades{} and {C:club}Clubs{} count as the same suit",
                     "{X:mult,C:white}X#1#{} Mult if poker hand contains at least",
-                    "{C:attention}#2#{} {C:spade}Black{} cards and {C:attention}#3#{} {C:heart}Red{} cards"
+                    "{C:attention}#2#{} {C:spade}Black{} cards and {C:attention}#3#{} {C:heart}Red{} cards",
+                    "{C:dark_edition}GX{}: {C:attention}Enhances all{} cards in hand into {C:attention}Wild Cards{}"
                 },
             },
             j_hel_gxtest = {
@@ -133,6 +139,7 @@ return {
             hel_grunch_ex = "Grunch!",
             hel_trample_ex = "Trample!",
             b_take = "TAKE",
+            b_hel_gx = "GX",
         },
         labels = {
             hel_greedy_seal = "Greedy Seal",

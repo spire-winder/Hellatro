@@ -30,9 +30,9 @@ SMODS.Joker {
 	key = "smearflowerpot",
     pools = {["Hell"] = true},
 	pos = { x = 1, y = 0 },
-	config = { extra = { Xmult = 5, num_black = 2, num_red = 2} },
+	config = { extra = { Xmult = 2.5, num_black = 2, num_red = 2} },
 	rarity = "hel_gx",
-	cost = 10,
+	cost = 6,
 	atlas = "hel_joker",
 	loc_vars = function(self, info_queue, center)
 		if G.GAME.hel_gx_use > 0 then
@@ -43,36 +43,44 @@ SMODS.Joker {
         
 		return { vars = { center.ability.extra.Xmult, center.ability.extra.num_black, center.ability.extra.num_red } }
 	end,
-    add_to_deck = function(self, card, from_debuff)
-		if G.GAME.hel_gx_use > 0 then
-			card:start_dissolve()
-        else
-            G.GAME.hel_gx_use = 1
-        end
-	end,
 	calculate = function(self, card, context)
         if context.joker_main then
               local suits = {
-                 ['Hearts'] = 0,
-                 ['Spades'] = 0
+                 ['Red'] = 0,
+                 ['Black'] = 0
              }
              for i = 1, #context.scoring_hand do
                  if context.scoring_hand[i].ability.name ~= 'Wild Card' then
-                     if context.scoring_hand[i]:is_suit('Hearts', true) then suits["Hearts"] = suits["Hearts"] + 1
-                     elseif context.scoring_hand[i]:is_suit('Spades', true) then suits["Spades"] = suits["Spades"] + 1 end
+                     if context.scoring_hand[i]:is_suit('Hearts', true) or context.scoring_hand[i]:is_suit('Diamonds', true) then suits["Red"] = suits["Red"] + 1 end
+                     if context.scoring_hand[i]:is_suit('Spades', true) or context.scoring_hand[i]:is_suit('Clubs', true) then suits["Black"] = suits["Black"] + 1 end
                     else 
-                     if context.scoring_hand[i]:is_suit('Hearts') then suits["Hearts"] = suits["Hearts"] + 1
-                  elseif context.scoring_hand[i]:is_suit('Spades') then suits["Spades"] = suits["Spades"] + 1 end
+                     if context.scoring_hand[i]:is_suit('Hearts') or context.scoring_hand[i]:is_suit('Diamonds') then suits["Red"] = suits["Red"] + 1 end
+                  if context.scoring_hand[i]:is_suit('Spades') or context.scoring_hand[i]:is_suit('Clubs') then suits["Black"] = suits["Black"] + 1 end
                  end
              end
-              if suits["Hearts"] >= card.ability.extra.num_red and
-              suits["Spades"] >= card.ability.extra.num_black then
+              if suits["Red"] >= card.ability.extra.num_red and
+              suits["Black"] >= card.ability.extra.num_black then
                   return {
                       message = localize{type='variable',key='a_xmult',vars={card.ability.extra.Xmult}},
                       Xmult_mod = card.ability.extra.Xmult
                   }
               end
         end
+    end,
+    gx = function(self, card)
+        for i = 1, #G.hand.cards do
+            local _card = G.hand.cards[i]
+            buff_card(_card, 0, 0, "m_wild")
+            delay(0.1)
+        end
+        G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        delay = 0.2,
+        func = function()
+            G.hand:unhighlight_all(); return true
+        end
+        }))
+        delay(0.5)
     end
 }
 
@@ -94,13 +102,6 @@ SMODS.Joker {
         end
         
 		return { vars = { center.ability.extra.Xmult } }
-	end,
-    add_to_deck = function(self, card, from_debuff)
-		if G.GAME.hel_gx_use > 0 then
-			card:start_dissolve()
-        else
-            G.GAME.hel_gx_use = 1
-        end
 	end,
 	calculate = function(self, card, context)
         if context.joker_main then
@@ -172,5 +173,37 @@ SMODS.Joker {
                     end
             end
         end
+    end
+}
+
+SMODS.Joker { 
+	object_type = "Joker",
+	name = "hel-yaoi",
+	key = "yaoi",
+    pools = {["Hell"] = true},
+	pos = { x = 3, y = 0 },
+	config = { extra = { num_gay = 2, multi = 3} },
+	rarity = 3,
+	cost = 8,
+	atlas = "hel_joker",
+	loc_vars = function(self, info_queue, center)
+		return { vars = { center.ability.extra.multi, center.ability.extra.num_gay, } }
+	end,
+	calculate = function(self, card, context)
+        if context.joker_main then
+            local gays = 0
+            for i = 1, #context.scoring_hand do
+                local rank = SMODS.Ranks[context.scoring_hand[i].base.value]
+                if rank.key == "King" or rank.key == "Jack" then
+                    gays = gays + 1
+                end
+            end
+            if gays >= card.ability.extra.num_gay then
+                return {
+                    message = localize{type='variable',key='a_xmult',vars={card.ability.extra.multi}},
+                    Xmult_mod = card.ability.extra.multi
+                }
+            end
+      end
     end
 }

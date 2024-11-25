@@ -3,17 +3,6 @@ version = "1.0.0"
 dump_lua = true
 priority = 0
 
-# add smeared functionality
-[[patches]]
-[patches.regex]
-target = "card.lua"
-pattern = '''next\(find_joker\('Smeared Joker'\)\)'''
-position = "after"
-payload = '''
-    or next(find_joker('hel-smearflowerpot'))
-'''
-match_indent = true
-
 # initiate variables
 [[patches]]
 [patches.pattern]

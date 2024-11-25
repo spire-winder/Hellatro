@@ -13,7 +13,11 @@ SMODS.Consumable {
 	order = 41,
 	atlas = "hel_not_joker",
 	can_use = function(self, card)
-		return true
+		if G.GAME.hel_gx_use > 0 then
+            return false
+        else
+          return true
+        end
 	end,
   config = { extra = {num_hands = 1}},
 	loc_vars = function(self, info_queue, card)
@@ -26,12 +30,7 @@ SMODS.Consumable {
 	  return { vars = { card.ability.extra.num_hands } }
 	end,
 	use = function(self, card, area, copier)
-        if G.GAME.hel_gx_use > 0 then
-			card:start_dissolve()
-            return true
-        else
-            G.GAME.hel_gx_use = 1
-        end
+    G.GAME.hel_gx_use = 1
     local used_tarot = card or copier
       G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
           play_sound('timpani')

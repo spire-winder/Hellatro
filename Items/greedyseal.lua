@@ -1,4 +1,4 @@
-SMODS.Seal {
+--[[SMODS.Seal {
 	name = "hel-Greedy-Seal",
 	key = "greedy",
 	badge_colour = HEX("59a444"),
@@ -15,4 +15,4 @@ SMODS.Seal {
             return true end }))
         end
     end
-}
+}]]

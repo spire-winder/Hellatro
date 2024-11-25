@@ -34,6 +34,96 @@ function loc_colour(_c, _default)
 	G.ARGS.LOC_COLOURS.diamond = G.C.SUITS.Diamonds
 	G.ARGS.LOC_COLOURS.spade = G.C.SUITS.Spades
 	G.ARGS.LOC_COLOURS.club = G.C.SUITS.Clubs
-	G.ARGS.LOC_COLOURS.hel_ascendant = G.C.HEL_ASCENDANT
 	return lc(_c, _default)
+end
+
+G.FUNCS.use_gx = function(e)
+	G.GAME.hel_gx_use = 1
+	local c1 = e.config.ref_table
+	G.E_MANAGER:add_event(Event({
+		trigger = "after",
+		delay = 0.1,
+		func = function()
+			c1.config.center:gx()
+			return true
+		end,
+	}))
+end
+
+G.FUNCS.can_use_gx = function(e)
+	if G.GAME.hel_gx_use > 0 then
+		e.config.colour = G.C.UI.BACKGROUND_INACTIVE
+      	e.config.button = nil
+	else
+		e.config.colour = G.C.DARK_EDITION
+        e.config.button = 'use_gx'
+	end
+end
+
+local use_and_sell_buttonsref = G.UIDEF.use_and_sell_buttons
+function G.UIDEF.use_and_sell_buttons(card)
+	local retval = use_and_sell_buttonsref(card)
+	if card.area and card.area.config.type == 'joker' and card.ability.set == 'Joker' and card.config.center.gx ~= nil then
+		local gx = 
+		{n=G.UIT.C, config={align = "cr"}, nodes={
+		  
+			{n=G.UIT.C, config={ref_table = card, align = "cr",maxw = 1.25, padding = 0.1, r=0.08, minw = 1.25, hover = true, shadow = true, colour = G.C.GOLD, one_press = true, button = 'sell_card', func = 'can_use_gx'}, nodes={
+			  {n=G.UIT.B, config = {w=0.1,h=0.6}},
+			  {n=G.UIT.C, config={align = "tm"}, nodes={
+				  {n=G.UIT.R, config={align = "cm", maxw = 1.25}, nodes={
+					  {n=G.UIT.T, config={text = localize('b_use'),colour = G.C.UI.TEXT_LIGHT, scale = 0.4, shadow = true}}
+				  }},
+				  {n=G.UIT.R, config={align = "cm"}, nodes={
+					{n=G.UIT.T, config={text = localize('b_hel_gx'),colour = G.C.WHITE, scale = 0.55, shadow = true}}
+				  }}
+			  }}
+			}}
+		  }}
+		retval.nodes[1].nodes[2].nodes = retval.nodes[1].nodes[2].nodes or {}
+		table.insert(retval.nodes[1].nodes[2].nodes, gx)
+		return retval
+	end
+
+	return retval
+end
+
+function buff_card(card, amount, repetition, enhancement)
+	if not repetition then repetition = 1 end
+	G.E_MANAGER:add_event(Event({
+		func = function()
+			card:flip(); play_sound('card1', 1.15); card:juice_up(0.3,
+				0.3); return true
+		end
+	}))
+	if amount then
+		G.E_MANAGER:add_event(Event({
+			func = function()
+				for i=1,amount * repetition do
+					increase_rank(card)
+				end
+			return true
+			end
+		}))
+	end
+	if enhancement then
+		if enhancement == "random" then
+			local cen_pool = {}
+			for k, v in pairs(G.P_CENTER_POOLS["Enhanced"]) do
+			if v.key ~= 'm_stone' and not v.overrides_base_rank then
+				cen_pool[#cen_pool + 1] = v
+			end
+			end
+			enhancement = pseudorandom_element(cen_pool, pseudoseed("mtg-random_enhancement"))
+		else
+			enhancement = G.P_CENTERS[enhancement]
+		end
+		card:set_ability(enhancement, nil, true)
+	end
+		G.E_MANAGER:add_event(Event({
+			func = function()
+				card:flip(); play_sound('tarot2', 0.85, 0.6); card
+					:juice_up(
+						0.3, 0.3); return true
+			end
+		}))
 end
