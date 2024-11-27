@@ -49,7 +49,8 @@ return {
                 text = {
                     "{X:mult,C:white}X#1#{} Mult if poker hand contains at least",
                     "{C:attention}#2#{} {C:spade}Black{} cards and {C:attention}#3#{} {C:heart}Red{} cards",
-                    "{C:dark_edition}Suit Smear GX{}: {C:attention}Enhances all{} cards in hand into {C:attention}Wild Cards{}"
+                    "{C:dark_edition}Suit Smear GX{}: Draw {C:attention}#4#{} cards and {C:attention}enhance{}",
+                    "all cards in hand into {C:attention}Wild Cards{}"
                 },
             },
             j_hel_vagabondandcreditcard = {

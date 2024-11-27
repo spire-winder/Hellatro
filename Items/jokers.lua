@@ -31,7 +31,7 @@ SMODS.Joker {
 	key = "smearflowerpot",
     pools = {["Hell"] = true},
 	pos = { x = 1, y = 0 },
-	config = { extra = { Xmult = 2.5, num_black = 2, num_red = 2} },
+	config = { extra = { Xmult = 2.5, num_black = 2, num_red = 2, cards = 5} },
 	rarity = "hel_gx",
 	cost = 6,
 	atlas = "hel_joker",
@@ -72,6 +72,7 @@ SMODS.Joker {
         return #G.hand.cards > 0
     end,
     gx = function(self, card)
+        G.FUNCS.draw_from_deck_to_hand(card.ability.extra.cards)
         for i = 1, #G.hand.cards do
             local _card = G.hand.cards[i]
             enhance_card(_card, "m_wild")
