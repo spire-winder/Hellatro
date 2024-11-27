@@ -8,6 +8,15 @@ return {
                     "how to {C:attention}Grunch{}"
                 },
             },
+            j_hel_yuri = {
+                name = "Yuri",
+                text = {
+                    "This Joker gains {C:chips}+#1#{} Chips",
+                    "when a {C:attention}Woman{} is destroyed",
+                    "{C:inactive}({C:attention}All{C:inactive} cards are {C:attention}women{C:inactive}){}",
+                    "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)"
+                },
+            },
             j_hel_yaoi = {
                 name = "Yaoi",
                 text = {
@@ -15,12 +24,51 @@ return {
                     "{C:attention}#2#{} {C:attention}Jacks{} and/or {C:attention}Kings{}"
                 },
             },
+            j_hel_seeingdoubleandperkeo = {
+                name = "{C:dark_edition}Seeing Double and Perkeo TAG TEAM GX{}",
+                text = {
+                    "{X:mult,C:white}X#1#{} Mult and create a {C:dark_edition}Negative{} copy of {C:attention}1{} random {C:attention}consumable{}",
+                    "card in your possession if played hand has a scoring {C:club}Club{}",
+                    "card and a scoring card of any other suit ",
+                    "{C:dark_edition}Inverted Double GX{}: Create a {C:dark_edition}Negative{} copy of all {C:attention}Jokers{},",
+                    "{C:attention}Consumables{} and {C:attention}Booster Packs{} in {C:attention}the shop{}"
+                },
+            },
+            j_hel_grosmichelandcavendish = {
+                name = "{C:dark_edition}Gros Michel and Cavendish TAG TEAM GX{}",
+                text = {
+                    "{C:mult}+#1#{} Mult {C:attention}AND{} {X:mult,C:white}X#2#{} Mult",
+                    "{C:green}#3# in #4#{} chance this card is",
+                    "destroyed at end of round",
+                    "{C:dark_edition}Banana Slamma GX{}: Each played card",
+                    "gives {X:mult,C:white}X#5#{} Mult when scored until end of blind"
+                },
+            },
             j_hel_smearflowerpot = {
                 name = "{C:dark_edition}Smeared Joker and Flower Pot TAG TEAM GX{}",
                 text = {
                     "{X:mult,C:white}X#1#{} Mult if poker hand contains at least",
                     "{C:attention}#2#{} {C:spade}Black{} cards and {C:attention}#3#{} {C:heart}Red{} cards",
-                    "{C:dark_edition}GX{}: {C:attention}Enhances all{} cards in hand into {C:attention}Wild Cards{}"
+                    "{C:dark_edition}Suit Smear GX{}: {C:attention}Enhances all{} cards in hand into {C:attention}Wild Cards{}"
+                },
+            },
+            j_hel_vagabondandcreditcard = {
+                name = "{C:dark_edition}Vagabond and Credit Card TAG TEAM GX{}",
+                text = {
+                    "Go up to {C:red}-$#1#{} in debt",
+                    "Create a {C:tarot}Tarot{} card if hand",
+                    "is played while in {C:red}debt{}",
+                    "{C:dark_edition}Seal of Approval GX{}: Lose {C:money}$#2#{} and add a",
+                    "{C:purple}Purple Seal{} to played cards",
+                    "when scored this blind"
+                },
+            },
+            j_hel_stitched = {
+                name = "Stitched",
+                text = {
+                    "Has the triggers of",
+                    "{C:attention}#1#{} and",
+                    "{C:attention}#2#{}"
                 },
             },
             j_hel_gxtest = {
@@ -53,6 +101,13 @@ return {
                 text = {
                     "Gain a random {C:dark_edition}Negative{} {C:legendary}Legendary{} {C:attention}Joker{}",
                     "{C:red}-#1#{} Hands permanently"
+                },
+            },
+            c_hel_stitcher = {
+                name = "{C:dark_edition}The Stitcher GX{}",
+                text = {
+                    "Stitch two Jokers into a single Joker",
+                    "that has all the triggers of its parents"
                 },
             },
         },
@@ -136,6 +191,8 @@ return {
             k_hel_hell_pack = "Hell Pack",
             k_hel_gx = "GX",
 
+            hel_gx_ex = "GX!",
+            hel_banana_ex = "Banana!",
             hel_grunch_ex = "Grunch!",
             hel_trample_ex = "Trample!",
             b_take = "TAKE",

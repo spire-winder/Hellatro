@@ -44,19 +44,21 @@ G.FUNCS.use_gx = function(e)
 		trigger = "after",
 		delay = 0.1,
 		func = function()
-			c1.config.center:gx()
+			c1.config.center:gx(c1)
 			return true
 		end,
 	}))
+	card_eval_status_text(c1, 'extra', nil, nil, nil, {message = localize("hel_gx_ex"), colour = G.C.DARK_EDITION})
 end
 
 G.FUNCS.can_use_gx = function(e)
-	if G.GAME.hel_gx_use > 0 then
-		e.config.colour = G.C.UI.BACKGROUND_INACTIVE
-      	e.config.button = nil
-	else
+	local c1 = e.config.ref_table
+	if G.GAME.hel_gx_use == 0 and c1.config.center:can_gx(c1) then
 		e.config.colour = G.C.DARK_EDITION
         e.config.button = 'use_gx'
+	else
+		e.config.colour = G.C.UI.BACKGROUND_INACTIVE
+      	e.config.button = nil
 	end
 end
 
@@ -87,24 +89,13 @@ function G.UIDEF.use_and_sell_buttons(card)
 	return retval
 end
 
-function buff_card(card, amount, repetition, enhancement)
-	if not repetition then repetition = 1 end
+function enhance_card(card, enhancement)
 	G.E_MANAGER:add_event(Event({
 		func = function()
 			card:flip(); play_sound('card1', 1.15); card:juice_up(0.3,
 				0.3); return true
 		end
 	}))
-	if amount then
-		G.E_MANAGER:add_event(Event({
-			func = function()
-				for i=1,amount * repetition do
-					increase_rank(card)
-				end
-			return true
-			end
-		}))
-	end
 	if enhancement then
 		if enhancement == "random" then
 			local cen_pool = {}

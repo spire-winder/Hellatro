@@ -12,7 +12,7 @@ SMODS.Voucher {
             info_queue[#info_queue + 1] = { key = "r_hel_gx_rule_unused", set = "Other", config = { extra = 1 } }
         end
         
-	  return {  }
+	  return { vars = {} }
 	end,
 	redeem = function(self)
         if G.GAME.hel_gx_use > 0 then
