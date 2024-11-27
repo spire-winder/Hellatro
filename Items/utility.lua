@@ -49,6 +49,7 @@ G.FUNCS.use_gx = function(e)
 		end,
 	}))
 	card_eval_status_text(c1, 'extra', nil, nil, nil, {message = localize("hel_gx_ex"), colour = G.C.DARK_EDITION})
+	G.jokers:unhighlight_all()
 end
 
 G.FUNCS.can_use_gx = function(e)
