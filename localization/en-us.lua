@@ -53,6 +53,15 @@ return {
                     "all cards in hand into {C:attention}Wild Cards{}"
                 },
             },
+            j_hel_walkiehack = {
+                name = "{C:dark_edition}Walkie Talkie and Hack TAG TEAM GX{}",
+                text = {
+                    "Each played {C:attention}4{} gives {C:chips}+#1#{} Chips and {C:mult}+#2#{} Mult when scored",
+                    "Retrigger each played {C:attention}4{}",
+                    "{C:dark_edition}Fortification GX{}: Add {C:attention}#3#{} random {C:attention}editioned{},",
+                    "{C:attention}enhanced{}, {C:attention}sealed 4s{} to your hand"
+                },
+            },
             j_hel_vagabondandcreditcard = {
                 name = "{C:dark_edition}Vagabond and Credit Card TAG TEAM GX{}",
                 text = {
