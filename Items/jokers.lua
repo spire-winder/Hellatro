@@ -152,6 +152,7 @@ SMODS.Joker {
     end
 }
 
+--yaoi
 SMODS.Joker { 
 	object_type = "Joker",
 	name = "hel-yaoi",
@@ -159,8 +160,8 @@ SMODS.Joker {
     pools = {["Hell"] = true},
 	pos = { x = 3, y = 0 },
 	config = { extra = { num_gay = 2, multi = 2} },
-	rarity = 3,
-	cost = 8,
+	rarity = 2,
+	cost = 5,
 	atlas = "hel_joker",
 	loc_vars = function(self, info_queue, center)
 		return { vars = { center.ability.extra.multi, center.ability.extra.num_gay, } }
@@ -184,14 +185,15 @@ SMODS.Joker {
     end
 }
 
+--yuri
 SMODS.Joker {
 	name = "hel-yuri",
 	key = "yuri",
     pools = {["Hell"] = true},
 	pos = { x = 4, y = 0 },
-	config = { extra = { chips_per_destroy = 15, current_chips = 30} },
-	rarity = 1,
-	cost = 4,
+	config = { extra = { chips_per_destroy = 15, current_chips = 45} },
+	rarity = 2,
+	cost = 5,
 	atlas = "hel_joker",
 	loc_vars = function(self, info_queue, center)
 		return { vars = { center.ability.extra.chips_per_destroy, center.ability.extra.current_chips, } }
